@@ -11,11 +11,15 @@ const name="Name";
 const nameHint="Prachi Verma";
 const forgetPassword="Forgot Password ?";
 const login="Log In";
+const loggedin ="Logged In Successfully";
 const signup="Sign Up";
+const loggedout ="Logged Out Successfully";
 const createNewAccount="or,create a new account";
 const loginwith="Log in with";
 const privacyPolicy="Privacy Policy";
 const termsAndCond="Terms and Conditions";
+const oldpass="Old Password";
+const newpass="New Password";
 const alreadyHaveAccount="Already Have an Account ? ";
 
 //home
@@ -32,20 +36,15 @@ const searchanything="Search Anything",
       brand="Brand",
       topCategories="Categories",
       featuredCategories="Featured Categories",
-      womenDress="Women Dress",
-      accesories="Accesories",
-      makeup="Makeup",
-      menDress="Men Dress",
-      shoes="Shoes",
       electronics="Electronics",
       featuredProduct="Featured Product",
       allProducts="All Products";
 
 //categories Screen
 const
-    womenClothing="Women Clothing",
-    menClothing="Men Clothings",
-    kidsClothing="Kids Clothing",
+    womenFashion="Women Fashion",
+    menFashion="Men Fashion",
+    kidsFashion="Kids Fashion",
     jewellery="Jewellery",
     furniture="Furniture",
     sports="Sports",
@@ -65,6 +64,11 @@ const logout="Log Out",
     wishlist="My Wishlist",
     orders="My orders",
     messages="Messages";
+
+//payment method
+const paypal="Paypal",
+    paytm="PayTM",
+    cod="Cash On Delivery";
 
 
 

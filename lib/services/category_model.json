@@ -1,0 +1,94 @@
+{
+  "categories": [
+    {
+      "name": "Women Fashion",
+      "subcategory": [
+        "Western Wear",
+        "Ethnic Wear",
+        "Sports Wear",
+        "Lingeries",
+        "Accessories",
+        "Footwear"
+      ]
+    },
+    {
+      "name": "Men Fashion",
+      "subcategory": [
+        "Western Wear",
+        "Ethnic Wear",
+        "Sports Wear",
+        "Inner Wear",
+        "Accessories",
+        "Footwear"
+      ]
+    },
+    {
+      "name": "Kids Fashion",
+      "subcategory": [
+        "Clothing",
+        "Inner Wear",
+        "Accessories",
+        "Footwear",
+        "Backpacks",
+        "Winter Wear"
+      ]
+    },
+    {
+      "name":"Jewellery",
+      "subcategory": [
+        "Gold Jewellery",
+        "Silver Jewellery",
+        "Fashion Jewellery",
+        "Diamond "
+      ]
+    },
+    {
+      "name":"Furniture",
+      "subcategory": [
+        "Sofa & Couches",
+        "Bed",
+        "Table",
+        "Chair"
+      ]
+    },
+    {
+      "name":"Electronics",
+      "subcategory": [
+        "Computer,Laptops &Tablets ",
+        "Speakers and Earphones",
+        "Cameras",
+        "Mobile &Accessories"
+      ]
+    },
+    {
+      "name": "Personal Care",
+      "subcategory": [
+        "Makeup",
+        "Hair Care",
+        "Body Care",
+        "Lip care",
+        "Luxury Beauty"
+      ]
+    },
+    {
+      "name": "Games",
+      "subcategory": [
+        "Cricket",
+        "Cycling",
+        "Football",
+        "Running",
+        "Yoga & Fitness"
+      ]
+    },
+    {
+      "name": "Toys",
+      "subcategory": [
+        "Bikes",
+        "Cars",
+        "Soft Toys",
+        "Electronic Toys",
+        "Toy Vehicles"
+      ]
+    }
+  ]
+}

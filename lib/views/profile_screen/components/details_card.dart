@@ -9,7 +9,7 @@ Widget detailsCard(width,String? count,String ? title){
       5.heightBox,
       title!.text.color(darkFontGrey).size(12).make(),
     ],
-  ).box.white.rounded.shadowSm.height(65)
+  ).box.white.rounded.shadowSm.height(67)
       .width(width)
       .padding(EdgeInsets.all(4)).make();
 }

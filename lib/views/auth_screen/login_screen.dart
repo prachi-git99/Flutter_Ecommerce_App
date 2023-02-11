@@ -1,4 +1,5 @@
 import 'package:ecommerce_1/consts/lists.dart';
+import 'package:ecommerce_1/controller/auth_controller.dart';
 import 'package:ecommerce_1/views/home_screen/home.dart';
 import 'package:ecommerce_1/views/auth_screen/signup_screen.dart';
 import 'package:ecommerce_1/widgets_common/applogo_widget.dart';
@@ -14,6 +15,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var controller =Get.put(AuthController());
     return bgWidget(Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -24,36 +27,50 @@ class LoginScreen extends StatelessWidget {
             10.heightBox,
             "Log in to $appname".text.white.fontFamily(bold).size(18).make(),
             15.heightBox,
-            Column(
-              children: [
-                customTextField(hint: emailHint,title: email),
-                customTextField(hint:passwordHint,title: password),
-                Align(alignment:Alignment.centerRight,child: TextButton(onPressed: (){}, child:forgetPassword.text.make())),
-                5.heightBox,
-                ourButton(color: redColor,title: login,textColor: whiteColor,onPress: (){
-                  Get.to(()=>Home());
-                }).box.width(context.screenWidth-50).make(),
-                5.heightBox,
-                createNewAccount.text.color(fontGrey).make(),
-                5.heightBox,
-                ourButton(color: lightGolden,title: signup,textColor:redColor,onPress: (){Get.to(()=>SignupScreen());}).box.width(context.screenWidth-50).make(),
-                5.heightBox,
-                loginwith.text.color(fontGrey).make(),
-                5.heightBox,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children:List.generate(3, (index) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CircleAvatar(
-                      radius: 25,
-                      backgroundColor: lightGrey,
-                      child: Image.asset(socialIconList[index],width: 30,),
-                    ),
-                  )),
-                )
-              ],
-            ).box.rounded.padding(EdgeInsets.all(16))
-                .white.width(context.screenWidth-70).shadowSm.make(),
+            Obx(()=>
+                Column(
+                children: [
+                  customTextField(hint: emailHint,title: email,isPass: false,controller:controller.emailController,),
+                  customTextField(hint:passwordHint,title: password,isPass: true,controller: controller.passwordController),
+                  Align(alignment:Alignment.centerRight,child: TextButton(onPressed: (){}, child:forgetPassword.text.make())),
+                  5.heightBox,
+                  controller.isloading.value? CircularProgressIndicator(
+                    valueColor:AlwaysStoppedAnimation(redColor) ,
+                  ):
+                  ourButton(color: redColor,title:login,textColor: whiteColor,
+                      onPress:() async{
+                        controller.isloading(true);
+                        await controller.loginMethod(context:context).then((value){
+                          if(value !=null){
+                            VxToast.show(context, msg: loggedin);
+                            Get.offAll(()=>Home());
+                          }else{
+                            controller.isloading(false);
+                          }
+                        });
+                  }).box.width(context.screenWidth-50).make(),
+                  5.heightBox,
+                  createNewAccount.text.color(fontGrey).make(),
+                  5.heightBox,
+                  ourButton(color: lightGolden,title: signup,textColor:redColor,onPress: (){Get.to(()=>SignupScreen());}).box.width(context.screenWidth-50).make(),
+                  5.heightBox,
+                  loginwith.text.color(fontGrey).make(),
+                  5.heightBox,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:List.generate(3, (index) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CircleAvatar(
+                        radius: 25,
+                        backgroundColor: lightGrey,
+                        child: Image.asset(socialIconList[index],width: 30,),
+                      ),
+                    )),
+                  )
+                ],
+              ).box.rounded.padding(EdgeInsets.all(16))
+                  .white.width(context.screenWidth-70).shadowSm.make(),
+            ),
 
           ],
         ),

@@ -1,8 +1,11 @@
 import 'package:ecommerce_1/views/auth_screen/login_screen.dart';
+import 'package:ecommerce_1/views/home_screen/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import "package:ecommerce_1/consts/consts.dart";
 import 'package:ecommerce_1/widgets_common/applogo_widget.dart';
 import 'package:get/get.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -16,7 +19,16 @@ class _SplashScreenState extends State<SplashScreen> {
   //creating a method to change screen
   changeScreen(){
     Future.delayed(Duration(seconds:3),(){
-      Get.to(()=>LoginScreen());
+      // Get.to(()=>LoginScreen());
+      auth.authStateChanges().listen((User? user) {
+        print("print1 $user");
+        if(user==null && mounted){
+          Get.to(()=>LoginScreen());
+        }
+        else{
+          Get.to(()=> Home());
+        }
+      });
     });
   }
 
