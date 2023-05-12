@@ -1,7 +1,9 @@
 import 'package:ecommerce_1/consts/consts.dart';
 import 'package:ecommerce_1/consts/images.dart';
 
-const socialIconList=[icFacebookLogo,icGoogleLogo, icTwitterLogo];
+const socialIconList=[icPhoneLogo];
+
+const socialIconList2=[icEmailLogo];
 
 const slidersList=[imgSlider1,imgSlider2,imgSlider3,imgSlider4];
 

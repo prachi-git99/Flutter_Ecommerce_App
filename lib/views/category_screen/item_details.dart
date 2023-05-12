@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_1/consts/consts.dart';
 import 'package:ecommerce_1/consts/lists.dart';
 import 'package:ecommerce_1/controller/product_controller.dart';
+import 'package:ecommerce_1/services/firestore_services.dart';
 import 'package:ecommerce_1/views/chat_screen/chat_screen.dart';
+import 'package:ecommerce_1/widgets_common/loadingIndicator.dart';
 import 'package:ecommerce_1/widgets_common/our_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -100,6 +103,7 @@ class ItemDetails extends StatelessWidget {
                         CircleAvatar(
                           backgroundColor: Colors.white,
                           child: Icon(Icons.message_rounded,color:darkFontGrey,).onTap(() {
+
                             Get.to(()=>ChatScreen(),
                               arguments: [data['p_seller'],data['vendor_id']],
                             );
@@ -192,19 +196,40 @@ class ItemDetails extends StatelessWidget {
                     20.heightBox,
                     productsyoumayalsolike.text.fontFamily(bold).size(16).color(darkFontGrey).make(),
                     10.heightBox,
+
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: List.generate(6, (index) => Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset(imgP1,width: 150,fit: BoxFit.cover,),
-                            10.heightBox,
-                            "Laptop 4GB/265GB".text.fontFamily(semibold).color(darkFontGrey).make(),
-                            10.heightBox,
-                            "Rs.6,00,000".text.fontFamily(bold).color(redColor).size(16).make(),
-                          ],
-                        ).box.white.margin(EdgeInsets.symmetric(horizontal: 4)).roundedSM.padding(EdgeInsets.all(8)).make()),
+                      child: FutureBuilder(
+                        future: FirestoreServices.getFeaturedProducts(),
+                        builder: (context,AsyncSnapshot<QuerySnapshot> snapshot){
+                          if(!snapshot.hasData){
+                            return Center(child: loadingIndicator(),);
+                          }else if(snapshot.data!.docs.isEmpty){
+                            return Center(child:"No Featured Products".text.white.make() ,);
+                          }
+                          else{
+                            var featuredData = snapshot.data!.docs;
+                            return Row(
+                              children: List.generate(featuredData.length, (index) => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Image.network(featuredData[index]['p_img'][0],width: 130,height:160,fit: BoxFit.cover,),
+                                  10.heightBox,
+                                  "${featuredData[index]['p_name']}".text.fontFamily(semibold).color(darkFontGrey).make(),
+                                  10.heightBox,
+                                  "Rs.${featuredData[index]['p_price']}".text.fontFamily(bold).color(redColor).size(16).make(),
+                                ],
+                              ).box.white
+                                  .margin(EdgeInsets.symmetric(horizontal: 4))
+                                  .roundedSM.padding(EdgeInsets.all(8))
+                                  .make().onTap(() {
+                                Get.to(()=>ItemDetails(title:"${featuredData[index]['p_name']}",data: featuredData[index],));
+
+                              })
+                              ),
+                            );
+                          }
+                        },
                       ),
                     ),
                   ],

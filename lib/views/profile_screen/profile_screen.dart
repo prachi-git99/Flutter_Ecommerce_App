@@ -5,6 +5,7 @@ import 'package:ecommerce_1/views/orders_screen/orders_screen.dart';
 import 'package:ecommerce_1/wishlists/wishlist_screen.dart';
 import 'package:ecommerce_1/views/profile_screen/edit_profile.dart';
 import 'package:ecommerce_1/widgets_common/loadingIndicator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:ecommerce_1/consts/consts.dart';
 import 'package:ecommerce_1/consts/lists.dart';
@@ -22,21 +23,9 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     var controller = Get.put(ProfileController());
-
     return bgWidget(
       Scaffold(
-        body: StreamBuilder(
-            stream: FirestoreServices.getUser(currentUser!.uid),
-            builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot){
-              if(!snapshot.hasData){
-                return Center(
-                  child:loadingIndicator()
-                );
-              }
-              else{
-                // var data=snapshot.data!.docs[0];
-                // print("id:${data['id']}");
-                return SafeArea(
+        body: SafeArea(
                   child: Column(
                     children: [
                       //edit profile
@@ -58,28 +47,47 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                       //user details
-                      Row(
-                        children: [
-                          10.widthBox,
-                          // data['imageUrl']==''
-                          //     ?Image.asset(imgProfile2,width:100,fit: BoxFit.cover,).box.roundedFull.white.shadowSm.clip(Clip.antiAlias).make()
-                          //     :Image.network(data['imageUrl'],width:100,fit: BoxFit.cover,).box.roundedFull.white.shadowSm.clip(Clip.antiAlias).make(),
-                          10.widthBox,
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      StreamBuilder<QuerySnapshot>(
+                        stream: FirestoreServices.getUser(currentUser!.uid),
+                        builder:(BuildContext context,AsyncSnapshot <QuerySnapshot> snapshot) {
+                          if(!snapshot.hasData){
+                            return Center(
+                                child:loadingIndicator()
+                            );
+                          }
+                          else if(snapshot.data!.docs.isEmpty)
+                          {
+                            return Center(child: "No data".text.make());
+                          }
+                          else{
+                            var data = snapshot.data!.docs[0];
+                            print(data);
+                            return Row(
                               children: [
-                                "{data['name']}".text.fontFamily(semibold).white.make(),
-                                "{data['email']}".text.fontFamily(semibold).white.make(),
+                                10.widthBox,
+                                data['imageUrl']==''
+                                    ? Image.asset(imgProfile2,width:100,fit: BoxFit.cover,).box.roundedFull.white.shadowSm.clip(Clip.antiAlias).make()
+                                    : Image.network(data['imageUrl'],width:100,fit: BoxFit.cover,).box.roundedFull.white.shadowSm.clip(Clip.antiAlias).make(),
+                                10.widthBox,
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      "${data['name']}".text.fontFamily(semibold).white.make(),
+                                      "${data['email']}".text.fontFamily(semibold).white.make(),
+                                    ],
+                                  ),
+                                ),
+                                Icon(Icons.edit,color:Colors.red,).onTap(() {
+                                  controller.nameController.text  = data['name'];
+                                  Get.to(()=>EditProfileScreen(data: data,));
+                                }).box.margin(EdgeInsets.only(right:15)).roundedSM.size(35,35).shadowSm.white.make(),
+                                5.widthBox,
                               ],
-                            ),
-                          ),
-                          Icon(Icons.edit,color:Colors.red,).onTap(() {
-                            // controller.nameController.text  = data['name'];
-                            // Get.to(()=>EditProfileScreen(data: data,));
-                          }).box.margin(EdgeInsets.only(right:15)).roundedSM.size(35,35).shadowSm.white.make(),
-                          5.widthBox,
-                        ],
+                            );
+                          }
+
+                        }
                       ),
                       10.heightBox,
                       Container(
@@ -133,10 +141,8 @@ class ProfileScreen extends StatelessWidget {
                           .make().box.color(redColor).make(),
                     ],
                   ),
-                );
-              }
-            }
-        )
+                )
+
         )
     );
   }

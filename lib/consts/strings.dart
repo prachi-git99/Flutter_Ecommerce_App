@@ -1,9 +1,12 @@
-const appname = "eMart";
+const appname = "Vastra Mane";
 const appversion = "Version 1.0.0";
 const credits = "@PrachiV";
 //for auth forms
 const email = "Email";
 const emailHint="admin@admin.com";
+const mobileHint="+91 89********";
+const phone="Phone Number";
+const sendOtp="Send OTP";
 const password="Password";
 const passwordHint="********";
 const retypePassword="Retype Password";

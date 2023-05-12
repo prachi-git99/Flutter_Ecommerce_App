@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_1/consts/consts.dart';
 
 class FirestoreServices {
 
   //get users profile data
   static getUser(uid){
-    return firestore.collection(usersCollection).where('id',isEqualTo: uid).snapshots();
+     return  firestore.collection(usersCollection).where('id',isEqualTo:uid).snapshots();
   }
 
   //get product category wise

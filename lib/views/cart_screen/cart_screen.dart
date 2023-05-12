@@ -17,16 +17,26 @@ class CartScreen extends StatelessWidget {
     var controller =Get.put(CartController());
 
     return Scaffold(
-      bottomNavigationBar:SizedBox(
-        height: 55,
-        child: ourButton(
-            color: redColor,
-            onPress: (){
-              Get.to(()=>ShippingDetails());
-            },
-            title: "Proceed to shipping",
-            textColor: whiteColor
-        ),
+      bottomNavigationBar:StreamBuilder(
+        stream: FirestoreServices.getCart(currentUser!.uid),
+        builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot) {
+          return SizedBox(
+            height: 55,
+            child: ourButton(
+                color: redColor,
+                onPress: (){
+                  if(snapshot.data!.docs.isEmpty){
+                    VxToast.show(context, msg:"Cart Is Empty");
+                  }
+                  else{
+                    Get.to(()=>ShippingDetails());
+                  }
+                },
+                title: "Proceed to shipping",
+                textColor: whiteColor
+            ),
+          );
+        }
       ),
       backgroundColor: whiteColor,
       appBar:AppBar(

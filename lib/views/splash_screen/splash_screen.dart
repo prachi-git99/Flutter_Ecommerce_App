@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(Duration(seconds:3),(){
       // Get.to(()=>LoginScreen());
       auth.authStateChanges().listen((User? user) {
-        print("print1 $user");
+        print("splash screen user here $user");
         if(user==null && mounted){
           Get.to(()=>LoginScreen());
         }
@@ -42,6 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: redColor,
       body: Center(
         child: Column(

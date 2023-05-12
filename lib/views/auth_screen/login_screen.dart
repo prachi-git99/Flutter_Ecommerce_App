@@ -1,5 +1,6 @@
 import 'package:ecommerce_1/consts/lists.dart';
 import 'package:ecommerce_1/controller/auth_controller.dart';
+import 'package:ecommerce_1/views/auth_screen/mobile_login.dart';
 import 'package:ecommerce_1/views/home_screen/home.dart';
 import 'package:ecommerce_1/views/auth_screen/signup_screen.dart';
 import 'package:ecommerce_1/widgets_common/applogo_widget.dart';
@@ -58,13 +59,15 @@ class LoginScreen extends StatelessWidget {
                   5.heightBox,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children:List.generate(3, (index) => Padding(
+                    children:List.generate(socialIconList.length, (index) => Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CircleAvatar(
                         radius: 25,
                         backgroundColor: lightGrey,
                         child: Image.asset(socialIconList[index],width: 30,),
-                      ),
+                      ).onTap(() {
+                        Get.offAll(()=>MobileLogin());
+                      }),
                     )),
                   )
                 ],

@@ -1,5 +1,7 @@
 import 'package:ecommerce_1/controller/auth_controller.dart';
+import 'package:ecommerce_1/views/auth_screen/verify_email.dart';
 import 'package:ecommerce_1/views/home_screen/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_1/widgets_common/applogo_widget.dart';
 import 'package:ecommerce_1/widgets_common/custom_textfield.dart';
@@ -89,26 +91,30 @@ class _SignupScreenState extends State<SignupScreen> {
                       {
                         controller.isloading(true);
                         try{
-                          if(passwordController.text == retypePasswordController.text){
+                          if(passwordController.text == retypePasswordController.text ){
                             await controller.signupMethod(context: context,email: emailController.text,password:passwordController.text).then((value){
-                              return controller.storeUserData(
-                                email: emailController.text,
-                                password: passwordController.text,
-                                name:nameController.text,
-                              );
+                              if(!(FirebaseAuth.instance.currentUser!.emailVerified)){
+                                Get.offAll(()=>VerifyEmail());
+                                return controller.storeUserData(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  name:nameController.text,
+                                );
+                              }else{
+                                print("gadabad");
+                              }
                             }).then((value){
-                              VxToast.show(context, msg:loggedin);
-                              Get.offAll(()=>Home());
+                              VxToast.show(context,msg:loggedin);
+
                             });
                           }
                           else{
                             VxToast.show(context, msg:"Password does not matched");
                             controller.isloading(false);
                           }
-
                         }catch(e){
                           auth.signOut();
-                          VxToast.show(context, msg:e.toString());
+                          VxToast.show(context, msg:"Please fill the correct values");
                           controller.isloading(false);
                         }
                       }

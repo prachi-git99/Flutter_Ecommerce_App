@@ -30,7 +30,7 @@ class ChatsController extends GetxController{
       senderId:null,
     }).limit(1).get().then((QuerySnapshot snapshot){
       if(snapshot.docs.isNotEmpty){
-        chatDocId =snapshot.docs.single.id;
+        chatDocId = snapshot.docs.single.id;
       }else{
         chats.add({
           'created_on':null,

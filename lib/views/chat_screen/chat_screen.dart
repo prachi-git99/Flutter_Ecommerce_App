@@ -13,7 +13,7 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    var controller =Get.put(ChatsController());
+    var controller = Get.put(ChatsController());
 
     return Scaffold(
       backgroundColor:Colors.grey[200],
@@ -42,9 +42,9 @@ class ChatScreen extends StatelessWidget {
                       else{
                         return ListView(
                           children:snapshot.data!.docs.mapIndexed((currentValue, index){
-                            var data =snapshot.data!.docs[index];
+                            var data = snapshot.data!.docs[index];
                             return Align(
-                                alignment: data['uid'] == currentUser!.uid ?Alignment.centerRight:Alignment.centerLeft,
+                                alignment: data['uid'] == currentUser!.uid ? Alignment.centerRight:Alignment.centerLeft,
                                 child: senderBubble(data),
                             );
                           }).toList(),

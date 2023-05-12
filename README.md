@@ -1,6 +1,16 @@
 # ecommerce_1
 
-![collage](https://user-images.githubusercontent.com/83897459/227845482-037ce121-288a-4313-bdf5-e2d181b2db53.jpg)
-![collage (1)](https://user-images.githubusercontent.com/83897459/227845986-94cbbc7f-4795-4966-8def-53dffe17046e.jpg)
+A new Flutter project.
 
+## Getting Started
 
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

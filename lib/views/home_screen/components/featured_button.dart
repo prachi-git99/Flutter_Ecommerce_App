@@ -1,9 +1,12 @@
 import 'package:ecommerce_1/consts/consts.dart';
+import 'package:ecommerce_1/controller/product_controller.dart';
 import 'package:ecommerce_1/views/category_screen/category_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
 Widget featuredButton({String? title,icon}){
+  var controller = Get.put(ProductController());
   return Container(
     child: Row(
       children: [
@@ -16,6 +19,7 @@ Widget featuredButton({String? title,icon}){
     .margin(EdgeInsets.symmetric(horizontal: 4))
       .color(whiteColor).padding(EdgeInsets.all(4))
       .roundedSM.outerShadowSm.make().onTap(() {
-        Get.to(()=>CategoryDetails(title: title));
+    controller.getSubCategories(title);
+    Get.to(()=>CategoryDetails(title: title));
   });
 }
