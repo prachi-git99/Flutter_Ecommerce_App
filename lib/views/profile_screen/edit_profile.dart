@@ -1,20 +1,21 @@
 import 'dart:io';
 import 'package:ecommerce_1/consts/consts.dart';
 import 'package:ecommerce_1/controller/profile_controller.dart';
+import 'package:ecommerce_1/views/profile_screen/profile_screen.dart';
 import 'package:ecommerce_1/widgets_common/bg_widget.dart';
 import 'package:ecommerce_1/widgets_common/custom_textfield.dart';
 import 'package:ecommerce_1/widgets_common/our_button.dart';
 import 'package:get/get.dart';
 
 class EditProfileScreen extends StatelessWidget {
-  final dynamic data;
-  const EditProfileScreen({Key? key,this.data}) : super(key: key);
+
+  const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     
     var controller = Get.find<ProfileController>();
-
+    var data = ProfileScreen.userdata;
 
     return bgWidget(
         Scaffold(
@@ -45,6 +46,13 @@ class EditProfileScreen extends StatelessWidget {
                       controller: controller.nameController,
                       hint:nameHint,
                       title: name,
+                      isPass: false,
+                    ),
+                    10.heightBox,
+                    customTextField(
+                      controller: controller.emailController,
+                      hint:emailHint,
+                      title: email,
                       isPass: false,
                     ),
                     10.heightBox,
@@ -85,6 +93,7 @@ class EditProfileScreen extends StatelessWidget {
 
                             await controller.updateProfile(
                               imgUrl: controller.profileImageLink,
+                              email: controller.emailController.text,
                               name: controller.nameController.text,
                               password: controller.newpasswordController.text,
                             );

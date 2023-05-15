@@ -19,6 +19,8 @@ import 'package:ecommerce_1/controller/profile_controller.dart';
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
+  static var userdata;
+
   @override
   Widget build(BuildContext context) {
 
@@ -60,38 +62,37 @@ class ProfileScreen extends StatelessWidget {
                             return Center(child: "No data".text.make());
                           }
                           else{
-                            var data = snapshot.data!.docs[0];
-                            print(data);
+                            userdata = snapshot.data!.docs[0];
+
                             return Row(
                               children: [
                                 10.widthBox,
-                                data['imageUrl']==''
+                                userdata['imageUrl']==''
                                     ? Image.asset(imgProfile2,width:100,fit: BoxFit.cover,).box.roundedFull.white.shadowSm.clip(Clip.antiAlias).make()
-                                    : Image.network(data['imageUrl'],width:100,fit: BoxFit.cover,).box.roundedFull.white.shadowSm.clip(Clip.antiAlias).make(),
+                                    : Image.network(userdata['imageUrl'],width:100,fit: BoxFit.cover,).box.roundedFull.white.shadowSm.clip(Clip.antiAlias).make(),
                                 10.widthBox,
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      "${data['name']}".text.fontFamily(semibold).white.make(),
-                                      "${data['email']}".text.fontFamily(semibold).white.make(),
+                                      "${userdata['name']}".text.fontFamily(semibold).white.make(),
+                                      "${userdata['email']}".text.fontFamily(semibold).white.make(),
                                     ],
                                   ),
                                 ),
                                 Icon(Icons.edit,color:Colors.red,).onTap(() {
-                                  controller.nameController.text  = data['name'];
-                                  Get.to(()=>EditProfileScreen(data: data,));
+                                  controller.nameController.text  = userdata['name'];
+                                  print(userdata['name']);
+                                  Get.to(()=>EditProfileScreen());
                                 }).box.margin(EdgeInsets.only(right:15)).roundedSM.size(35,35).shadowSm.white.make(),
-                                5.widthBox,
                               ],
                             );
                           }
 
                         }
                       ),
-                      10.heightBox,
                       Container(
-                        color: redColor,
+                        color: whiteColor,
                         child: FutureBuilder(
                             future: FirestoreServices.getProfileCounts(),
                             builder: (BuildContext context,AsyncSnapshot snapshot){
@@ -99,7 +100,6 @@ class ProfileScreen extends StatelessWidget {
                                 return Center(child: loadingIndicator(),);
                               }else{
                                 var count = snapshot.data;
-                                print(count);
                                 return Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
@@ -112,6 +112,7 @@ class ProfileScreen extends StatelessWidget {
                             }
                         ),
                       ),
+                      10.heightBox,
                       //button section
                       ListView.separated(
                           shrinkWrap: true,

@@ -2,21 +2,46 @@ import 'package:ecommerce_1/consts/consts.dart';
 import 'package:ecommerce_1/controller/auth_controller.dart';
 import 'package:ecommerce_1/views/auth_screen/login_screen.dart';
 import 'package:ecommerce_1/views/auth_screen/signup_screen.dart';
+import 'package:ecommerce_1/views/auth_screen/verifyOTP_screen.dart';
 import 'package:ecommerce_1/views/home_screen/home.dart';
 import 'package:ecommerce_1/widgets_common/applogo_widget.dart';
 import 'package:ecommerce_1/widgets_common/bg_widget.dart';
 import 'package:ecommerce_1/widgets_common/our_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:pinput/pinput.dart';
 
 import '../../consts/lists.dart';
 import '../../widgets_common/custom_textfield.dart';
 
-class MobileLogin extends StatelessWidget {
+class MobileLogin extends StatefulWidget {
   const MobileLogin({Key? key}) : super(key: key);
+
+  static String verify="";
+  static String mobile="";
+
+  @override
+  State<MobileLogin> createState() => _MobileLoginState();
+}
+
+class _MobileLoginState extends State<MobileLogin> {
+
+  TextEditingController countrycode = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    countrycode.text="+91";
+    super.initState();
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
+
     var controller =Get.put(AuthController());
+
     return bgWidget(
       Scaffold(
         resizeToAvoidBottomInset: false,
@@ -31,21 +56,26 @@ class MobileLogin extends StatelessWidget {
               Obx(()=>
                   Column(
                     children: [
-                      customTextField(hint: mobileHint,title:phone,isPass: false,controller:controller.phoneNumberController,),
+                      customTextField(hint: mobileHint,title:phone,isPass: false,controller:controller.phoneNumberController,Keytype:TextInputType.phone),
+                      15.heightBox,
                       controller.isloading.value? CircularProgressIndicator(
                         valueColor:AlwaysStoppedAnimation(redColor) ,
-                      ):
-                      ourButton(color: redColor,title:sendOtp,textColor: whiteColor,
+                      ):ourButton(color: redColor,title:"Request OTP",textColor: whiteColor,
                           onPress:() async{
-                            controller.isloading(true);
-                            await controller.loginMethod(context:context).then((value){
-                              if(value !=null){
-                                VxToast.show(context, msg: loggedin);
-                                Get.offAll(()=>Home());
-                              }else{
-                                controller.isloading(false);
-                              }
-                            });
+
+                            await FirebaseAuth.instance.verifyPhoneNumber(
+                              phoneNumber: '${countrycode.text+controller.phoneNumberController.text}',
+                              timeout: Duration(seconds: 60),
+                              verificationCompleted: (PhoneAuthCredential credential) {},
+                              verificationFailed: (FirebaseAuthException e) {},
+                              codeSent: (String verificationId, int? resendToken) {
+                                MobileLogin.verify = verificationId;
+                                MobileLogin.mobile='${countrycode.text+controller.phoneNumberController.text}';
+                                Get.offAll(()=>VerifyOTP());
+                              },
+                              codeAutoRetrievalTimeout: (String verificationId) {},
+                            );
+
                           }).box.width(context.screenWidth-50).make(),
                       5.heightBox,
                       createNewAccount.text.color(fontGrey).make(),
@@ -79,3 +109,5 @@ class MobileLogin extends StatelessWidget {
     );
   }
 }
+
+

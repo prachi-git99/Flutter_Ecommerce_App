@@ -3,7 +3,7 @@ import 'package:ecommerce_1/consts/consts.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget customTextField({String ? title,String? hint,controller,isPass}){
+Widget customTextField({String ? title,String? hint,controller,isPass,Keytype}){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -11,6 +11,7 @@ Widget customTextField({String ? title,String? hint,controller,isPass}){
       5.heightBox,
       TextFormField(
         obscureText: isPass,
+        keyboardType: Keytype,
         controller:controller ,
         decoration: InputDecoration(
           hintStyle: TextStyle(

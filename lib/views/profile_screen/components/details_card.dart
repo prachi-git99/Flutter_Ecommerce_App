@@ -5,9 +5,9 @@ Widget detailsCard(width,String? count,String ? title){
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      count!.text.fontFamily(bold).color(darkFontGrey).size(14).make(),
+      count!.text.fontFamily(bold).color(redColor).size(14).make(),
       5.heightBox,
-      title!.text.color(darkFontGrey).size(12).make(),
+      title!.text.color(redColor).size(12).make(),
     ],
   ).box.white.rounded.shadowSm.height(67)
       .width(width)

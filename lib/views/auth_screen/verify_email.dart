@@ -57,7 +57,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
       await Future.delayed(Duration(seconds:10));
       setState(()=>canResendEmail=true);
     }catch(e){
-      print('Error occured');
+      VxToast.show(context, msg:"Please Verify your Email Id");
     }
   }
 
@@ -98,9 +98,6 @@ class _VerifyEmailState extends State<VerifyEmail> {
               }),
               child:Text('Cancel',style: TextStyle(fontSize:18,color: Colors.blue,fontWeight: FontWeight.w300),),
               style: ElevatedButton.styleFrom(minimumSize: Size.fromHeight(50))),
-          Spacer(),
-          "**".text.color(Colors.red).make(),
-          "Please check spam mail ,if mail not found in Inbox section".text.white.make()
         ],
       ),
     ),

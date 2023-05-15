@@ -7,6 +7,7 @@ const emailHint="admin@admin.com";
 const mobileHint="+91 89********";
 const phone="Phone Number";
 const sendOtp="Send OTP";
+const verifyOTP="Verify OTP";
 const password="Password";
 const passwordHint="********";
 const retypePassword="Retype Password";

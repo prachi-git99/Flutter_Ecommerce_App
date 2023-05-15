@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var controller =Get.find<HomeController>();
-    // print(Colors.red.value);
+
     return Container(
       color:lightGrey,
       width: context.screenWidth,

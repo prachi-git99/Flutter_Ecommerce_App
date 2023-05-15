@@ -1,5 +1,4 @@
 
-import 'package:basic_utils/basic_utils.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommerce_1/views/auth_screen/verify_email.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +14,9 @@ class AuthController extends GetxController {
   var emailController=TextEditingController();
   var passwordController=TextEditingController();
   var phoneNumberController = TextEditingController();
+  var otpCodeController=TextEditingController();
+  var nameController=TextEditingController();
+
 
   //login method
   Future<UserCredential?> loginMethod({context})async{
@@ -22,8 +24,7 @@ class AuthController extends GetxController {
     try{
         userCredential = await auth.signInWithEmailAndPassword(email:emailController.text, password:passwordController.text);
     }on FirebaseAuthException catch(e){
-      VxToast.show(context,msg:e.toString());
-      print(e.toString());
+      VxToast.show(context,msg:"Please Enter valid email or password");
     }
     return userCredential;
   }
@@ -34,13 +35,13 @@ class AuthController extends GetxController {
     try{
         userCredential = await auth.createUserWithEmailAndPassword(email: email, password: password);
     }on FirebaseAuthException catch(e){
-      VxToast.show(context,msg:e.toString());
+      VxToast.show(context,msg:"Please Enter valid data");
     }
     return userCredential;
   }
 
   //storing data in cloud method
-  storeUserData({name,password,email})async{
+  storeUserData({name,password,email,phone})async{
       DocumentReference store = await firestore.collection(usersCollection).doc(currentUser!.uid);
       store.set({
         "name":name,
@@ -51,9 +52,8 @@ class AuthController extends GetxController {
         "cart_count":"00",
         "order_count":"00",
         "wishlist_count":"00",
-      });
-      print("Data stored it was verified");
-
+        "phone":phone,
+      },SetOptions(merge: true));
   }
 
   //signOutMethod
@@ -62,24 +62,9 @@ class AuthController extends GetxController {
       await auth.signOut();
     }
     catch(e){
-      VxToast.show(context, msg:e.toString());
+      VxToast.show(context, msg:"Signed Out");
     }
   }
-  
-  // mobileLogin(){
-  //   auth.verifyPhoneNumber(
-  //       phoneNumber: phoneNumberController.text,
-  //       verificationCompleted: (_){}
-  //       verificationFailed: (e){
-  //         Utils().toastMessage(e.toString());
-  //       },
-  //       codeSent: codeSent,
-  //       codeAutoRetrievalTimeout:(e){
-  //         Utils().toastMessage(e.toString());
-  //       }
-  //
-  //   );
-  // }
 
 
 

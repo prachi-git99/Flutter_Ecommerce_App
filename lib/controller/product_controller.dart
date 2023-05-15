@@ -51,7 +51,6 @@ class ProductController extends GetxController{
 
   calculateTotalPrice(price){
     totalPrice.value = price * (quantity.value);
-    print("new price:$totalPrice");
   }
   
   addToCart({title,img,sellername,color,qty,tprice,context,vendorId})async{

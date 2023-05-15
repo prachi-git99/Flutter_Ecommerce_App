@@ -100,12 +100,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                   password: passwordController.text,
                                   name:nameController.text,
                                 );
-                              }else{
-                                print("gadabad");
                               }
                             }).then((value){
                               VxToast.show(context,msg:loggedin);
-
                             });
                           }
                           else{

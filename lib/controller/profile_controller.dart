@@ -19,17 +19,16 @@ class ProfileController extends GetxController{
   var nameController =TextEditingController();
   var oldpasswordController =TextEditingController();
   var newpasswordController =TextEditingController();
-
+  var emailController =TextEditingController();
 
   changeImage(context)async{
     try{
       final img = await ImagePicker().pickImage(source:ImageSource.gallery,imageQuality: 70);
-      print("hey you :$img");
       if(img == null) return ;
       profileImagePath.value=img.path;
     }
     on PlatformException catch(e){
-      VxToast.show(context,msg:e.toString());
+      VxToast.show(context,msg:"Something went wrong");
     }
   }
 
@@ -42,12 +41,13 @@ class ProfileController extends GetxController{
 
   }
   
-  updateProfile({name,password,imgUrl})async{
+  updateProfile({name,password,imgUrl,email})async{
     var store =firestore.collection(usersCollection).doc(currentUser!.uid);
     await store.set({
       'name':name,
       'password':password,
       'imageUrl':imgUrl,
+      'email':email,
     },SetOptions(merge: true));//sirf jo hmm ediyt krenge unko edit krega baaki sb vese k vese mrge
     isloading(false);
   }
