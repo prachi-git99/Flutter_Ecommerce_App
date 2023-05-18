@@ -1,4 +1,4 @@
-const appname = "Vastra Mane";
+const appname = "Emart";
 const appversion = "Version 1.0.0";
 const credits = "@PrachiV";
 //for auth forms
